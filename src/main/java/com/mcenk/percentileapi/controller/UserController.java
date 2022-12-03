@@ -2,6 +2,7 @@ package com.mcenk.percentileapi.controller;
 
 
 
+import com.mcenk.percentileapi.Dto.UserDto;
 import com.mcenk.percentileapi.model.User;
 import com.mcenk.percentileapi.service.UserService;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ public class UserController {
     // Auth  eklenecek
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user){
+    public ResponseEntity<UserDto> createUser(@RequestBody User user){
 
     return ResponseEntity.ok(userService.createUser(user));
     }

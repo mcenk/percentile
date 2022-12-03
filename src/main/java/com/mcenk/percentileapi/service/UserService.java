@@ -1,5 +1,6 @@
 package com.mcenk.percentileapi.service;
 
+import com.mcenk.percentileapi.Dto.UserDto;
 import com.mcenk.percentileapi.model.User;
 
 import com.mcenk.percentileapi.repository.UserRepository;
@@ -19,21 +20,25 @@ public class UserService {
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        passwordEncoder = new BCryptPasswordEncoder();
+        passwordEncoder = new BCryptPasswordEncoder(); // bu sekilde de yapilabilir
+        // ya da bean olarak configuration icerisinde de tanimlanabilir
     }
 
 
 
-    public User createUser(User user) {
-        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+    public UserDto createUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User savedUser = userRepository.save(user);
 
-//        User newUser= new User();
-//        newUser.setName(user.getName());
-//        newUser.setPassword(user.getPassword());
-         return userRepository.save(user);
+        return UserDto.builder()
+                .name(savedUser.getName())
+                .email(savedUser.getEmail())
+                .role(savedUser.getRole())
+                .build();
 
-         // bu alanda auth yapilabilir
+    }
 
-
+    public User findUserByUserName(String username){
+       return userRepository.findUserByUserName(username);
     }
 }
