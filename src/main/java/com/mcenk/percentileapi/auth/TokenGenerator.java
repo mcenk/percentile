@@ -7,14 +7,15 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Date;
 import java.util.logging.Logger;
 
+@Component
 public class TokenGenerator {
 
-   static Logger logger= Logger.getLogger(TokenGenerator.class.getName());
 
     @Value("${jwt-variables.KEY:percentile }")
     private String KEY;
@@ -28,6 +29,7 @@ public class TokenGenerator {
     public String generateToken(Authentication authentication){
 
         String username= ((UserDetails) authentication.getPrincipal()).getUsername();
+
         return JWT.create()
                 .withSubject(username)
                 .withExpiresAt(new Date(System.currentTimeMillis() + (EXPIRES_ACCESS_TOKEN_MINUTE*60*1000)))

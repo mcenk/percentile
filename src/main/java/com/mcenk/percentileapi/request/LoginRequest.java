@@ -1,20 +1,18 @@
-package com.mcenk.percentileapi.Dto;
+package com.mcenk.percentileapi.request;
 
-import com.mcenk.percentileapi.model.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class UserDto {
+public class LoginRequest {
 
     private String username;
+    private String password;
 
-    private String email;
-
-    private Role role;
 }

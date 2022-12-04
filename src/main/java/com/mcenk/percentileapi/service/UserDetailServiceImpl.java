@@ -22,7 +22,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user= userService.findUserByUserName(username);
+        User user= userService.findUserByUsername(username);
 
     List<SimpleGrantedAuthority> roles= Stream.of(user.getRole())
             .map(e-> new SimpleGrantedAuthority(e.name()))
@@ -30,7 +30,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     // prefix olmadan rolleri kullanmak amaciyla bu satir yazildi
 //        59'
-        return new org.springframework.security.core.userdetails.User(user.getName(),user.getPassword(),roles);
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),roles);
         // User karismasin diye package ismi otomatik eklendi
         // roller nerelere erisecegi konusunda gerekli
 //        bu fn tekrar incele
