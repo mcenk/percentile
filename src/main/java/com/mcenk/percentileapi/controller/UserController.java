@@ -12,9 +12,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@PreAuthorize("permitAll()")
+
 @RestController
-@RequestMapping ("/user/signup")
+@RequestMapping ("/a")
 public class UserController {
     private final UserService userService;
 
@@ -24,15 +24,45 @@ public class UserController {
 
     // Auth  eklenecek
 
-    @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody User user){
+    @PostMapping()
+    public ResponseEntity<User> createUser(@RequestBody User user){
 
-    return ResponseEntity.ok(userService.createUser(user));
+     return ResponseEntity.ok(userService.createUser(user));
+    };
+//
+//    @GetMapping
+//    public List<User> getUsers(){
+//        return (userService.getAllUsers());
+//    }
+    @GetMapping("/login")
+    public String loginEndpoint() {
+        return "Login!";
     }
 
-    @GetMapping
-
-    public List<User> getUsers(){
-        return (userService.getAllUsers());
+    @GetMapping("/admin")
+    public String adminEndpoint() {
+        return "Admin!";
     }
+
+    @GetMapping("/user")
+    public String userEndpoint() {
+        return "User!";
+    }
+
+    @GetMapping("/all")
+    public String allRolesEndpoint() {
+        return "All Roles!";
+    }
+
+    @DeleteMapping("/admin/delete")
+    public String deleteEndpointA() {
+        return "I am deleting ";
+    }
+
+
+    @DeleteMapping("/user/delete")
+    public String deleteEndpointU() {
+        return "I am deleting " ;
+    }
+
 }

@@ -24,6 +24,6 @@ public class PercentileApiApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		userService.createUser(User.builder().username("serra").email("abc@gmail.com").password("pass").role(Role.ADMIN).build());
+	userService.createUser(User.builder().username("serra").email("abc@gmail.com").password("pass").role(Role.ADMIN).build());
 	}
 }
