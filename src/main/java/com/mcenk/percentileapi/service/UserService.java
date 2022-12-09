@@ -29,12 +29,16 @@ public class UserService {
         passwordEncoder= new BCryptPasswordEncoder();
     }
 
+    public User getOneUserByUserName(String userName) {
+        return userRepository.findUserByUsername(userName);
+    }
+
 
     public User createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User savedUser = userRepository.save(user);
         log.error("yaratilan mail:"+ savedUser.getEmail());
-        log.warn("yaratilan kullanici"+user.getUsername());
+        log.warn("yaratilan kullanici"+user.getUserName());
         return savedUser;
     }
 
@@ -58,7 +62,10 @@ public class UserService {
 //    }
 
     public User findUserByUsername(String username){
-       return userRepository.findUserByUsername(username).orElse(null);
+       return userRepository.findUserByUsername(username);
+    }
+    public User saveOneUser(User newUser) {
+        return userRepository.save(newUser);
     }
 
     public List<User> getAllUsers() {
