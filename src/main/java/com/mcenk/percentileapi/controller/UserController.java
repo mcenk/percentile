@@ -2,8 +2,6 @@ package com.mcenk.percentileapi.controller;
 
 
 
-import com.mcenk.percentileapi.Dto.UserDto;
-import com.mcenk.percentileapi.model.Child;
 import com.mcenk.percentileapi.model.User;
 import com.mcenk.percentileapi.service.UserService;
 
@@ -27,7 +25,7 @@ public class UserController {
     @PostMapping()
     public ResponseEntity<User> createUser(@RequestBody User user){
 
-     return ResponseEntity.ok(userService.createUser(user));
+     return ResponseEntity.ok(userService.saveUser(user));
     };
 //
 //    @GetMapping
