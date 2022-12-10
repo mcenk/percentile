@@ -1,32 +1,41 @@
 package com.mcenk.percentileapi.controller;
 
 
-import com.mcenk.percentileapi.Dto.TokenResponseDto;
+
+import com.mcenk.percentileapi.model.User;
+
 import com.mcenk.percentileapi.request.LoginRequest;
-import com.mcenk.percentileapi.service.AuthService;
+import com.mcenk.percentileapi.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/login")
 public class AuthController {
     private static final Logger log= LoggerFactory.getLogger(AuthController.class);
-    private final AuthService authService;
+    private final UserService userService;
 
-    public AuthController(AuthService authService) {
-        this.authService = authService;
+    public AuthController(UserService userService) {
+        this.userService = userService;
     }
 
+    @PostMapping
+    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest){
+        Optional<User> userOptional = userService.validUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
 
-    @PostMapping("/deneme")
-    public ResponseEntity<TokenResponseDto> login(@RequestBody LoginRequest loginRequest){
-        log.error(loginRequest.getUsername());
-         return ResponseEntity.ok(authService.login(loginRequest));
+        if (userOptional.isPresent()) {
+            User user  = userOptional.get();
+            return ResponseEntity.ok(user);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+
+
 
     }
 
