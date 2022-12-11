@@ -1,43 +1,41 @@
 package com.mcenk.percentileapi.auth;
 
+import com.mcenk.percentileapi.model.User;
 import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+
 @Data
-public class MyUserPrincipal implements UserDetails {
+public class MyUser implements UserDetails {
+    private static final Logger log= LoggerFactory.getLogger(SecurityConfig.class);
+    User user;
 
-
-    private Long id;
-    private String username;
-    private String password;
-    private String name;
-    private String email;
-    private Collection<? extends GrantedAuthority> authorities;
-
-
-    public MyUserPrincipal() {
-
+    public MyUser(User user) {
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+         List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString()));
+         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
-
     @Override
     public String getUsername() {
-        return username;
+        return user.getUsername();
     }
 
+    public String getEmail(){ return user.getEmail();}
     @Override
     public boolean isAccountNonExpired() {
         return true;
