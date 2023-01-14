@@ -21,9 +21,6 @@ public class ChildService {
 
     public Child createChild(Child child){
 
-
-
-
         return  childRepository.save(child);
     }
     public List<Child> getAllChild(){
@@ -33,6 +30,7 @@ public class ChildService {
     }
 
     public Child getChildById(Long id) {
-        return childRepository.findById(id).orElse(null);
+        // costum exception yazilacak
+        return childRepository.findById(id).orElseThrow(()-> new RuntimeException());
     }
 }
